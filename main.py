@@ -46,5 +46,5 @@ while(client.get_free_space().result < 1 * 1024 * 1024 * 1024 * 1024):
     # print(success)
     time.sleep(1)
 
-print(f"Free Space -> {client.get_free_space().result}")
-
+print(f"The torrent server has ample free space -> {client.get_free_space().result}")
+client.disconnect()
