@@ -10,6 +10,8 @@ def get_next_key(dictionary, current_key):
             found_current = True
     return None
 
+DESIRED_FREE_SPACE = 1 * 1000 * 1000 * 1000 * 1000
+
 
 # instantiate a client
 client = DelugeWebClient(url="http://spike.local:8112", password="")
@@ -18,9 +20,9 @@ client = DelugeWebClient(url="http://spike.local:8112", password="")
 # once logged in the `client` will maintain the logged in state as long as you don't call
 # client.disconnect()
 client.login()
-
-while(client.get_free_space().result < 1 * 1024 * 1024 * 1024 * 1024):
-    print(f"\nFree Space -> {client.get_free_space().result} is less than { 1024 * 1024 * 1024 * 1024}, finding one to delete....")
+print(f"Desired Free Space: \n{DESIRED_FREE_SPACE}")
+while(client.get_free_space().result < DESIRED_FREE_SPACE):
+    print(f"\nFree Space -> {client.get_free_space().result} is less than {DESIRED_FREE_SPACE}, finding one to delete....")
     all_torrents = client.get_torrents_status(keys=['seeding_time','hash','is_finished','paused','total_peers','total_seeds','ratio','name','time_since_transfer','label'])
     # print(all_torrents.result)
     key = next(iter(all_torrents.result))
@@ -46,5 +48,5 @@ while(client.get_free_space().result < 1 * 1024 * 1024 * 1024 * 1024):
     # print(success)
     time.sleep(1)
 
-print(f"The torrent server has ample free space -> {client.get_free_space().result}")
+print(f"The torrent server has ample free space -> \n{client.get_free_space().result}")
 client.disconnect()
