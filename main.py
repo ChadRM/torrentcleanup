@@ -20,25 +20,31 @@ client = DelugeWebClient(url="http://spike.local:8112", password="")
 client.login()
 
 while(client.get_free_space().result < 1 * 1024 * 1024 * 1024 * 1024):
-    print(f"\nFree Space -> {client.get_free_space().result} is less than { 1024 * 1024 * 1024 * 1024}")
-    all_torrents = client.get_torrents_status(keys=['seeding_time','hash','is_finished','paused','total_peers','total_seeds','ratio','name','time_since_transfer'])
+    print(f"\nFree Space -> {client.get_free_space().result} is less than { 1024 * 1024 * 1024 * 1024}, finding one to delete....")
+    all_torrents = client.get_torrents_status(keys=['seeding_time','hash','is_finished','paused','total_peers','total_seeds','ratio','name','time_since_transfer','label'])
+    # print(all_torrents.result)
     key = next(iter(all_torrents.result))
     candidate_torrent = ""
     oldest_time = -1
     while key in all_torrents.result:
+        if all_torrents.result[key]['label'] != "":
+            print(f"{all_torrents.result[key]['name']} -- label: {all_torrents.result[key]['label']}")
         if all_torrents.result[key]['seeding_time']/60/60/24 > 60:
             if all_torrents.result[key]['paused'] == False:
                 # print(f"{key} - {all_torrents.result[key]['name']} - {all_torrents.result[key]['seeding_time']/60/60/24} - {all_torrents.result[key]['time_since_transfer']/60/60/24}")
                 if all_torrents.result[key]['time_since_transfer'] > oldest_time:
-                    oldest_time = all_torrents.result[key]['time_since_transfer']
-                    candidate_torrent = str(key)
+                    if all_torrents.result[key]['label'] != "":
+                        pass
+                    else:
+                        oldest_time = all_torrents.result[key]['time_since_transfer']
+                        candidate_torrent = str(key)
         key = get_next_key(all_torrents.result, key)
 
     print(f"\n\n Candidate for oldest: {all_torrents.result[candidate_torrent]['name']}")
     # client.pause_torrent(candidate_torrent)
     success = client.remove_torrent(torrent_id=candidate_torrent,remove_data=True)
-    print(success)
+    # print(success)
     time.sleep(1)
 
 print(f"Free Space -> {client.get_free_space().result}")
-print(f"In TB terms -> {float(client.get_free_space().result /1024/1024/1024/1024)}")
+
