@@ -14,7 +14,7 @@ def get_next_key(dictionary, current_key):
     return None
 
 
-DESIRED_FREE_SPACE = 1 * 1000 * 1000 * 1000 * 1000
+DESIRED_FREE_SPACE = 1 * 1000 * 1000 * 1024 * 1024
 
 client = DelugeWebClient(url="http://spike.local:8112", password="")
 
@@ -31,6 +31,7 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
     oldest_time = -1
     while key in all_torrents.result:
         if all_torrents.result[key]["label"] != "":
+           pass
             # print(f"{all_torrents.result[key]['name']} -- label: {all_torrents.result[key]['label']}")
         elif int(all_torrents.result[key]['seeding_time']) / 60 / 60 / 24 > 60:
             if not all_torrents.result[key]['paused']:
