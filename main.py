@@ -31,8 +31,8 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
     oldest_time = -1
     while key in all_torrents.result:
         if all_torrents.result[key]["label"] != "":
-            print(f"{all_torrents.result[key]['name']} -- label: {all_torrents.result[key]['label']}")
-        if int(all_torrents.result[key]['seeding_time']) / 60 / 60 / 24 > 60:
+            # print(f"{all_torrents.result[key]['name']} -- label: {all_torrents.result[key]['label']}")
+        elif int(all_torrents.result[key]['seeding_time']) / 60 / 60 / 24 > 60:
             if not all_torrents.result[key]['paused']:
 
                 if all_torrents.result[key]['time_since_transfer'] > oldest_time:
