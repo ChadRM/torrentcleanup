@@ -14,7 +14,7 @@ def get_next_key(dictionary, current_key):
     return None
 
 
-DESIRED_FREE_SPACE = 1 * 1000 * 1000 * 1024 * 1024
+DESIRED_FREE_SPACE = 1 * 1000 * 1024 * 1024 * 1024
 
 client = DelugeWebClient(url="http://spike.local:8112", password="")
 
@@ -50,4 +50,4 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
     time.sleep(1)
 
 print(f"The torrent server has ample free space -> \n{client.get_free_space().result}")
-client.disconnect()
+# client.disconnect()
