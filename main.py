@@ -19,10 +19,10 @@ DESIRED_FREE_SPACE = 1 * 1000 * 1024 * 1024 * 1024
 client = DelugeWebClient(url="http://spike.local:8112", password="")
 
 client.login()
-print(f"Desired Free Space: \n{DESIRED_FREE_SPACE}")
+print(f"🤔 Desired Free Space: \n{DESIRED_FREE_SPACE}")
 while client.get_free_space().result < DESIRED_FREE_SPACE:
     print(
-        f"\nFree Space -> {client.get_free_space().result} is less than {DESIRED_FREE_SPACE}, finding one to delete....")
+        f"☹️ Free Space -> {client.get_free_space().result} is less than {DESIRED_FREE_SPACE}, finding one to delete....")
     all_torrents = client.get_torrents_status(
         keys=['seeding_time', 'hash', 'is_finished', 'paused', 'total_peers', 'total_seeds', 'ratio', 'name',
               'time_since_transfer', 'label'])
@@ -44,10 +44,10 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
                         candidate_torrent = str(key)
         key = get_next_key(all_torrents.result, key)
 
-    print(f"\n\n Candidate for oldest: {all_torrents.result[candidate_torrent]['name']}")
+    print(f"🚫 Candidate for oldest: {all_torrents.result[candidate_torrent]['name']}")
     # client.pause_torrent(candidate_torrent)
     success = client.remove_torrent(torrent_id=candidate_torrent, remove_data=True)
     time.sleep(1)
 
-print(f"The torrent server has ample free space -> \n{client.get_free_space().result}")
+print(f"😊  The torrent server has ample free space -> \n{client.get_free_space().result}")
 # client.disconnect()
