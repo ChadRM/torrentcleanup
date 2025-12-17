@@ -4,9 +4,9 @@ from deluge_web_client import DelugeWebClient
 
 
 def get_next_key(dictionary, current_key):
-    keys_iterator = iter(dictionary)
+    keys = dictionary.keys()
     found_current = False
-    for key in keys_iterator:
+    for key in keys:
         if found_current:
             return key  # This is the next key
         if key == current_key:
@@ -14,15 +14,13 @@ def get_next_key(dictionary, current_key):
     return None
 
 
-DESIRED_FREE_SPACE = int((1000 * 1024 * 1024 * 1024)/2)
+DESIRED_FREE_SPACE = int((1000 * 1024 * 1024 * 1024)/4)
 
-client = DelugeWebClient(url="http://spike.local:8112", password="")
+client = DelugeWebClient(url="http://spike:8112", password="")
 
 client.login()
 print(f"🤔 Desired Free Space: \n{DESIRED_FREE_SPACE}")
 while client.get_free_space().result < DESIRED_FREE_SPACE:
-    # print(
-    #    f"☹️  Free Space -> {client.get_free_space().result} is less than {DESIRED_FREE_SPACE}, finding one to delete....")
     all_torrents = client.get_torrents_status(
         keys=['seeding_time', 'hash', 'is_finished', 'paused', 'total_peers', 'total_seeds', 'ratio', 'name',
               'time_since_transfer', 'label'])
@@ -50,4 +48,4 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
     time.sleep(1)
 
 print(f"😊  The torrent server has ample free space -> \n{client.get_free_space().result}")
-# client.disconnect()
+
