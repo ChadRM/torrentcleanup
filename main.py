@@ -3,6 +3,9 @@ import time
 from deluge_web_client import DelugeWebClient
 
 
+# I'm not sure i really need this iterator? I think I did weird shit
+# why is this a thing?  I should just grab them sorted, right?
+
 def get_next_key(dictionary, current_key):
     keys = dictionary.keys()
     found_current = False
@@ -19,6 +22,10 @@ DESIRED_FREE_SPACE = int((1000 * 1024 * 1024 * 1024)/4)
 client = DelugeWebClient(url="http://spike:8112", password="")
 
 client.login()
+
+# Need to refactor so it's called as a function and then returns output.
+# maybe logs?  Maybe spits out to gotify?  That'd be cooler...
+
 print(f"🤔 Desired Free Space: \n{DESIRED_FREE_SPACE}")
 while client.get_free_space().result < DESIRED_FREE_SPACE:
     all_torrents = client.get_torrents_status(
@@ -27,6 +34,13 @@ while client.get_free_space().result < DESIRED_FREE_SPACE:
     key = next(iter(all_torrents.result))
     candidate_torrent = ""
     oldest_time = -1
+    # This is some fucked up shit right here.
+    # Pretty sure this is not the way to do this...
+    # Try iterating through each line
+    # Who wrote this code?!
+    # The logic is right except I think this can infinite loop.
+    # Re-write! (But use this as reference)
+
     while key in all_torrents.result:
         if all_torrents.result[key]["label"] != "":
             pass
