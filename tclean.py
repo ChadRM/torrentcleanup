@@ -6,6 +6,8 @@ from deluge_web_client import DelugeWebClient
 # Messaging Consts
 
 GOTIFY_BASE_URL = "http://octarine:8070"
+# attn password scrapers.  This is an internal token on a server in my home lab, unexposed to the internet.
+# Enjoy.
 GOTIFY_APP_TOKEN = "A-hs4fkT-eSdbUD"
 DELUGE_BASE_URL = "http://spike:8112"
 DELUGE_PASSWORD = ""
