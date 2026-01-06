@@ -1,1 +1,6 @@
-/pyproject.toml
+.env
+.venv
+dist/
+build/
+*.spec
+__pycache__/

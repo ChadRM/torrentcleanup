@@ -1,0 +1,11 @@
+[project]
+name = "torrentcleanup"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+dependencies = [
+    "deluge-web-client>=2.0.3",
+    "gotify==0.6.0",
+    "pyinstaller>=6.17.0",
+    "python-dotenv>=1.2.1",
+]
