@@ -3,7 +3,7 @@ import os
 import logging
 import sys
 from dotenv import load_dotenv
-from gotify import Gotify, GotifyError
+from gotify import Gotify
 from deluge_web_client import DelugeWebClient, DelugeWebClientError
 
 # Load environment variables
