@@ -18,9 +18,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Constants
-GOTIFY_BASE_URL = os.getenv("GOTIFY_BASE_URL", "http://octarine:8070")
+GOTIFY_BASE_URL = os.getenv("GOTIFY_BASE_URL", "http://octarine.cetacean-cloud.ts.net:8070")
 GOTIFY_APP_TOKEN = os.getenv("GOTIFY_APP_TOKEN")
-DELUGE_BASE_URL = os.getenv("DELUGE_BASE_URL", "http://spike:8112")
+DELUGE_BASE_URL = os.getenv("DELUGE_BASE_URL", "http://spike.cetacean-cloud.ts.net:8112")
 DELUGE_PASSWORD = os.getenv("DELUGE_PASSWORD", "")
 GB = 1073741824
 SIXTY_DAYS_IN_SECONDS = 60 * 24 * 60 * 60
